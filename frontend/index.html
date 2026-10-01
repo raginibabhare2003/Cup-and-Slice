@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#111">
+<title>Cup & Slice | Full Stack Ordering System</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style1.css">
+
+</head>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="top-navbar">
+  <div class="navbar" id="myNavbar">
+    <div class="logo">
+  <a href="#home">
+    <img src="1.png" alt="Cup & Slice Logo">
+  </a>
+</div>
+
+    <a href="#">HOME</a>
+    <a href="#menu">MENU</a>
+    <a href="#about">ABOUT</a>
+    <a href="#contact">CONTACT</a>
+    <a href="javascript:void(0)" id="dashboardLink" style="display:none" onclick="openDashboard()">DASHBOARD</a>
+   
+    <a href="javascript:void(0)" onclick="openOrderTracker()">MY ORDERS</a>
+    <a href="javascript:void(0)" id="authLink" onclick="openSignin()">SIGN IN</a>
+    <span id="backendStatus" style="margin-left:10px;font-size:12px;color:#00c853">● BACKEND CONNECTED</span>
+
+
+
+  </div>
+</div>
+  
+<!-- Header with image -->
+<header class="hero" id="home">
+   <div class="slides">
+    <div class="slide active" style="background-image: url('slide3.jpg');"></div>
+    <div class="slide" style="background-image: url('burger.jpg');"></div>
+    <div class="slide" style="background-image: url('slide5.jpg');"></div>
+    <div class="slide" style="background-image: url('slide1.jpg');"></div>
+  </div>
+  
+  
+  <div class="open-time">
+    <span>Open from 11am🕚 to 12pm🕛</span>
+  </div>
+
+  <!-- Center content -->
+  <div class="hero-content">
+    <span class="hero-title" style="background-color:black;color: hotpink;font-size: 60px;">Cup & Slice</span>
+
+    <p>
+      <a href="#menu" class="menu-btn" style="background-color:black;color: hotpink;font-size: 30px;">Let's see the menu.....</a>
+    </p>
+  </div>
+
+</header>
+
+<!----Signin--->
+<div id="signinModal" class="signin-modal">
+  <div class="signin-box">
+    <span class="close-btn" onclick="closeSignin()">&times;</span>
+
+    <h2>Sign In</h2>
+
+    <input type="text" id="username" placeholder="User ID / Username" required>
+    <input type="email" id="email" placeholder="Email (for account updates)">
+    <input type="tel" id="phone" placeholder="Mobile Number">
+    <input type="password" id="password" placeholder="Password (min 8 characters)" minlength="8" required>
+    <p style="font-size:12px;color:#666">For new customers, email/mobile are optional but recommended for notifications.</p>
+
+    <button onclick="signIn('login')">Sign In</button>
+    <button onclick="signIn('register')" style="margin-top:8px;background:#444">Create Customer Account</button>
+
+    <p id="successMsg" class="success-msg"></p>
+  </div>
+</div>
+
+
+
+
+<!-- Menu Container -->
+<!-- Menu Section -->
+<section class="menu-section" id="menu">
+  <div class="menu-container">
+    <h1 class="menu-title">THE MENU</h1>
+
+    <!-- Tabs -->
+    <div class="menu-tabs">
+      <div class="tab active" onclick="filterMenu('all', this)">All</div>
+      <div class="tab" onclick="filterMenu('pizza', this)">Pizza</div>
+      <div class="tab" onclick="filterMenu('coffee', this)">Coffee</div>
+      <div class="tab" onclick="filterMenu('starter', this)">Starter</div>
+      <div class="tab" onclick="filterMenu('burger', this)">Burger</div>
+      <div class="tab" onclick="filterMenu('softdrinks', this)">Softdrinks</div>
+    </div>
+
+    <!-- Pizza -->
+    <div class="menu-grid" data-category="pizza">
+      <div class="menu-card">
+        <span class="badge new">🆕 New</span>
+        <img src="images/margarita.png" alt="Margarita">
+        <h3>Margherita</h3>
+        <p>Fresh tomatoes, fresh mozzarella, fresh basil</p>
+        <div class="menu-footer">
+          <span class="price">₹99.00</span>
+          <button onclick="openOrderPopup('Margherita', 99)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge popular">⭐ Popular</span>
+        <img src="./images/cheese-corn.png" alt="Cheese Corn Pizza">
+        <h3>Cheese Corn</h3>
+        <p>Pizza sauce, mozzarella cheese, sweet corn</p>
+        <div class="menu-footer">
+          <span class="price">₹159.00</span>
+          <button onclick="openOrderPopup('Cheese Corn', 159)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge hot">🔥 Hot</span>
+        <img src="./images/chickenpizza.png" alt="Chicken Pizza">
+        <h3>Chicken Pizza</h3>
+        <p>Fresh tomatoes, mozzarella, chicken, onions</p>
+        <div class="menu-footer">
+          <span class="price">₹209.00</span>
+          <button onclick="openOrderPopup('Chicken Pizza', 209)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge hot">🔥 Hot</span>
+        <img src="images/neapolitan-pizza.png" alt="Neapolitan Pizza">
+        <h3>Neapolitan</h3>
+        <p>Tomatoes, mozzarella, herbs, parmesan</p>
+        <div class="menu-footer">
+          <span class="price">₹249.00</span>
+          <button onclick="openOrderPopup('Neapolitan', 249)">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coffee -->
+    <div class="menu-grid" data-category="coffee">
+      <div class="menu-card">
+        <span class="badge popular">⭐ Popular</span>
+        <img src="images/cappuccino.png" alt="Cappuccino">
+        <h3>Cappuccino</h3>
+        <p>Espresso, steamed milk, foam</p>
+        <div class="menu-footer">
+          <span class="price">₹199.00</span>
+          <button onclick="openOrderPopup('Cappuccino', 199)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge new">🆕 New</span>
+        <img src="images/lattecofee.png" alt="Latte Coffee">
+        <h3>Latte</h3>
+        <p>Espresso with steamed milk</p>
+        <div class="menu-footer">
+          <span class="price">₹149.00</span>
+          <button onclick="openOrderPopup('Latte', 149)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge recommend">❤️ Recommended</span>
+        <img src="images/Mochacofee.png" alt="Mocha Coffee">
+        <h3>Mocha</h3>
+        <p>Espresso, steamed milk, chocolate</p>
+        <div class="menu-footer">
+          <span class="price">₹149.00</span>
+          <button onclick="openOrderPopup('Mocha', 149)">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Starter -->
+    <div class="menu-grid" data-category="starter">
+      <div class="menu-card">
+        <span class="badge seasonal">🌿 Seasonal</span>
+        <img src="images/vegetableSoup.png" alt="Vegetable Soup">
+        <h3>Today's Soup</h3>
+        <p>Ask the waiter</p>
+        <div class="menu-footer">
+          <span class="price">₹99.00</span>
+          <button onclick="openOrderPopup('Today\'s Soup', 99)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge popular">⭐ Popular</span>
+        <img src="images/GarlicBread.png" alt="Garlic Bread">
+        <h3>Garlic Bread</h3>
+        <p>Garlic butter & herbs</p>
+        <div class="menu-footer">
+          <span class="price">₹149.00</span>
+          <button onclick="openOrderPopup('Garlic Bread', 149)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge hot">🔥 Hot</span>
+        <img src="images/Nachos.png" alt="Nachos">
+        <h3>Nachos</h3>
+        <p>Cheese, salsa & toppings</p>
+        <div class="menu-footer">
+          <span class="price">₹109.00</span>
+          <button onclick="openOrderPopup('Nachos', 109)">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Burger -->
+    <div class="menu-grid" data-category="burger">
+      <div class="menu-card">
+        <span class="badge hot">🔥 Hot</span>
+        <img src="images/cheseburger.jpg" alt="Cheeseburger">
+        <h3>Cheeseburger</h3>
+        <p>Hamburger with melted cheese</p>
+        <div class="menu-footer">
+          <span class="price">₹399.00</span>
+          <button onclick="openOrderPopup('Cheeseburger', 399)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge popular">⭐ Popular</span>
+        <img src="images/vegii.jpg" alt="Veggie Burger">
+        <h3>Veggie Burger</h3>
+        <p>Packed with vegetables</p>
+        <div class="menu-footer">
+          <span class="price">₹179.00</span>
+          <button onclick="openOrderPopup('Veggie Burger', 179)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge hot">🔥 Hot</span>
+        <img src="images/spicyburger.jpg" alt="Spicy Burger">
+        <h3>Spicy Burger</h3>
+        <p>Ree Drummond's spicy queso burgers</p>
+        <div class="menu-footer">
+          <span class="price">₹299.00</span>
+          <button onclick="openOrderPopup('Spicy Burger', 299)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge popular">⭐ Popular</span>
+        <img src="images/vadapav.jpg" alt="Indian Twist">
+        <h3>Indian Twist</h3>
+        <p>Mumbaikar's ka pyaar</p>
+        <div class="menu-footer">
+          <span class="price">₹99.00</span>
+          <button onclick="openOrderPopup('Indian Twist', 99)">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Softdrinks -->
+    <div class="menu-grid" data-category="softdrinks">
+      <div class="menu-card">
+        <span class="badge popular">⭐ Popular</span>
+        <img src="images/fruity-mocktail.png" alt="Fruity Mocktail">
+        <h3>Fruity Mocktail</h3>
+        <p>Fruit-flavoured mocktail with grenadine and orange juice</p>
+        <div class="menu-footer">
+          <span class="price">₹199.00</span>
+          <button onclick="openOrderPopup('Fruity Mocktail', 199)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge new">🆕 New</span>
+        <img src="images/Non-alchohol.png" alt="Non-alcoholic punch">
+        <h3>Non-alcoholic Punch</h3>
+        <p>Easy drink with zesty citrus flavours</p>
+        <div class="menu-footer">
+          <span class="price">₹269.00</span>
+          <button onclick="openOrderPopup('Non-alcoholic Punch', 269)">Order Now</button>
+        </div>
+      </div>
+      <div class="menu-card">
+        <span class="badge recommend">❤️ Recommended</span>
+        <img src="images/faux.png" alt="Faux fizz">
+        <h3>Faux Fizz</h3>
+        <p>Pear, apricots, honey, lemon and rosemary</p>
+        <div class="menu-footer">
+          <span class="price">₹299.00</span>
+          <button onclick="openOrderPopup('Faux Fizz', 299)">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="about" class="about-section">
+
+  <!-- LEFT CONTENT -->
+  <div class="about-left">
+
+    <h1 class="about-title">About Us & History</h1>
+
+    <p>
+      Cup & Slice was founded by three MCA friends from JD College of Engineering & Management as a startup idea.
+      What began as college discussions turned into a shared vision & mission to create a peaceful café for study,
+      relaxation, and quality food. With teamwork, creativity, and an entrepreneurial mindset,
+      we turned our idea into Cup & Slice.
+    </p>
+
+    <p class="highlight">
+      Cup ☕ & Slice 🍕 is not just a café — it’s the beginning of our journey as young entrepreneurs 🚀✨.
+    </p>
+
+    <!-- TEAM -->
+    <div class="team">
+
+      <div class="member">
+        <img src="owner.jpg" alt="Owner">
+        <h4>The Owner</h4>
+        <p>Mrs. Vaibhavi Raut</p>
+      </div>
+
+      <div class="member">
+        <img src="manager.jpg" alt="Manager">
+        <h4>The Manager</h4>
+        <p>Mrs. Ragini Babhare</p>
+      </div>
+
+      <div class="member">
+        <img src="chef.jpg" alt="Chef">
+        <h4>The Chef</h4>
+        <p>Mrs. Ishika Dangore</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT SLIDESHOW -->
+  <div class="about-right">
+
+  <div class="about-slideshow">
+    <div class="about-slide active" style="background-image: url('interior1.jpg');"></div>
+    <div class="about-slide" style="background-image: url('interior2.jpg');"></div>
+    <div class="about-slide" style="background-image: url('interior3.jpg');"></div>
+  </div>
+
+  <div class="image-text">
+    Our café interiors reflect warmth & creativity.
+  </div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- Contact -->
+<section id="contact" class="contact-section">
+  <div class="contact-container">
+
+    <h1 class="section-title"  style="padding-top: 10px;">Contact</h1>
+    <h1 style="font-size: 15px; color: aliceblue;">📍 College Road, Study Town</h1>
+      <h2 style="font-size: 15px; color: aliceblue;">📞 +91 98765 43210</h2>
+      <h3 style="font-size: 15px; color: aliceblue;">✉️ cupandslice@gmail.com</h3>
+    <h3 style="font-size: 17px; color: aliceblue;"><span class="tag" >Just Try</span> We offer full-service catering for any event.We understand your needs and we will cater the food .</h3>
+
+    <p class="reserve-text"><strong>Reserve</strong> a table,ask for today's special or just send us a message:</p>
+
+    <form class="contact-form" id="reserveForm" style="height: 40%;width: 80%;">
+      <input type="text" name="Name" placeholder="Name" required>
+      <input type="number" name="People" placeholder="How many people" required>
+      <input type="datetime-local" name="DateTime" required>
+      <input type="text" name="Message" placeholder="Message / Special requirements" required>
+      <button type="submit">SEND MESSAGE</button>
+    </form>
+ </div>
+ <div class="container-con">
+  <img src="cafe1.jpg" alt="Cafe Interior">
+
+  <div class="text-overlay">
+    <h4>We are proud of our interiors.</h4>
+  </div>
+</div>
+
+</section>
+
+
+
+
+
+<!-- ===== FOOTER ===== -->
+
+  <footer class="footer" style="background-color:lavenderblush;color: black;width: 100%;
+  height: 50vh;">
+ <!-- <button onclick="openOrderPopup('Margherita', 99)">Order Now</button>--->
+  <p1>Powered by <a href="#home">Cup & Slice</a></p1>
+
+  <!-- Top Contact Info -->
+  <div class="footer-top-info">
+    <p class="alt-text">Alternatively, you can reach out to us at:</p>
+    <p>📍 College Road, Study Town</p>
+    <p>✉️ cupandslice@gmail.com</p>
+    <p>📞 +91 98765 43210 (9 AM – 11 PM)</p>
+
+    <!-- Social Media Icons (center) -->
+    <div class="footer-social">
+      <span onclick="showSocial('Instagram: @cupandslice')"><img src="insta.jpg" style="height:50px;width: 50px;border-radius: 50%;">Instagram</span>
+      <span onclick="showSocial('Facebook: Cup & Slice Cafe')"><img src="fb.jpg" style="height:50px;width: 50px;border-radius: 50%;">Facebook</span>
+      <span onclick="showSocial('YouTube: Cup & Slice')"><img src="you.jpg" style="height:50px;width: 50px;border-radius: 50%;">Youtube</span>
+      <span onclick="showSocial('Twitter: @cup_slice')"><img src="twiter.jpg" style="height:50px;width: 50px;border-radius: 50%;">Twitter</span>
+      <span onclick="showSocial('LinkedIn: Cup & Slice')"><img src="link.jpg" style="height:50px;width: 50px;border-radius: 50%;">Linkdin</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer Links -->
+  <div class="footer-links">
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#menu">Cafe Menu</a>
+      <a href="#contact">Customer Care</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Opening Hours</h4>
+      <table class="opening-hours">
+        <tr>
+          <td>Monday:</td>
+          <td>11:00 AM - 11:00 PM</td>
+        </tr>
+        <tr>
+          <td>Tuesday:</td>
+          <td>11:00 AM - 11:00 PM</td>
+        </tr>
+        <tr>
+          <td>Wednesday:</td>
+          <td>11:00 AM - 11:00 PM</td>
+        </tr>
+        <tr>
+          <td>Thursday:</td>
+          <td>Closed</td>
+        </tr>
+        <tr>
+          <td>Friday:</td>
+          <td>11:00 AM - 12:00 PM</td>
+        </tr>
+        <tr>
+          <td>Saturday:</td>
+          <td>12:00 AM - 1:00 AM</td>
+        </tr>
+        <tr>
+          <td>Sunday:</td>
+          <td>12:00 AM - 1:00 AM</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:cupandslice@gmail.com">Email Us</a>
+      <a href="tel:+919876543210">Call Us</a>
+     <h4>About Us</h4>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact Us</a>
+ </div>
+
+  </div>
+
+   <hr>
+
+  <!-- Bottom -->
+  <div class="footer-bottom">
+    © Cup & Slice. All rights reserved.
+  </div>
+
+</footer>
+
+
+
+<section id="liveAccountPanel" style="display:none;max-width:1100px;margin:30px auto;padding:22px;background:#fff5f8;border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.08)">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div><h2 style="margin:0">Welcome, <span id="welcomeName"></span> 👋</h2><p style="margin:6px 0">Your orders and notifications are connected to the Cup & Slice backend.</p></div>
+    <div><button onclick="openDashboard()">My Orders & Notifications</button></div>
+  </div>
+</section>
+
+<!-- Order Popup -->
+
+<div id="orderPopup" class="popup-overlay">
+  <div class="popup-content">
+    <span class="close" onclick="closeOrderPopup()">&times;</span>
+    <h2 id="popupItemName"></h2>
+    <p>Price: ₹<span id="popupItemPrice"></span></p>
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" min="1" value="1">
+    <p>Total: ₹<span id="totalPrice"></span></p>
+    <input id="customerName" placeholder="Customer name" style="width:100%;padding:10px;margin:6px 0">
+    <select id="orderType" style="width:100%;padding:10px;margin:6px 0" onchange="toggleOrderFields()">
+      <option value="delivery">🛵 Home Delivery</option><option value="pickup">🏃 Pickup</option><option value="dine-in">🍽️ Dine-in</option>
+    </select>
+    <input id="orderAddress" placeholder="Delivery address / pickup note" style="width:100%;padding:10px;margin:6px 0">
+    <input id="tableNo" placeholder="Table number (for dine-in)" style="width:100%;padding:10px;margin:6px 0;display:none">
+    <select id="orderSource" style="width:100%;padding:10px;margin:6px 0"><option value="Direct Website">Cup & Slice Website</option><option value="Swiggy">Swiggy</option><option value="Zomato">Zomato</option><option value="Other Marketplace">Other Marketplace</option></select>
+    <select id="paymentMethod" style="width:100%;padding:10px;margin:6px 0" onchange="showPaymentHelp()">
+      <option value="cod">💵 Cash on Delivery</option><option value="pay_at_cafe">🏪 Pay at Cafe</option><option value="upi">📱 UPI / Google Pay</option><option value="phonepe">💜 PhonePe</option><option value="paytm">🔵 Paytm</option><option value="card_paypal">💳 Online Payment (Razorpay: Card / UPI / Netbanking)</option>
+    </select>
+    <div id="paymentHelp" style="display:none;background:#fff7e6;padding:12px;border-radius:10px;margin:6px 0">
+      <b>Pay online</b><br>UPI ID: <span id="upiIdText">cupandslice@upi</span><br>Mobile: <span id="paymentPhoneText">+919876543210</span><br>
+      <img src="payment-qr.png" alt="UPI payment QR" style="width:150px;height:150px;margin-top:8px">
+      <input id="paymentRef" placeholder="Enter UTR / transaction ID after payment" style="width:100%;padding:10px;margin-top:8px">
+    </div>
+    <input id="orderTip" type="number" min="0" placeholder="Tip (optional)" style="width:100%;padding:10px;margin:6px 0">
+    <input id="orderNotes" placeholder="Special instructions / allergy notes" style="width:100%;padding:10px;margin:6px 0">
+    <p id="etaPreview" style="font-weight:bold">⏱️ Estimated time: 35 minutes</p>
+    <button onclick="confirmOrder()">Confirm Order</button>
+  </div>
+</div>
+
+
+
+<script src="script.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<div id="orderTrackerModal" class="popup-overlay" style="display:none">
+  <div class="popup-content" style="max-width:850px;max-height:85vh;overflow:auto">
+    <span class="close" onclick="closeOrderTracker()">&times;</span><h2>🛍️ My Orders & Notifications</h2>
+    <div id="homeOrderNotifications"></div><div id="homeOrders"></div>
+  </div>
+</div>
+<button id="installApp" style="position:fixed;right:16px;bottom:16px;z-index:9999;padding:11px 15px;border:0;border-radius:999px;background:#111;color:#fff;display:none;box-shadow:0 6px 20px #0003">📲 Download App</button><script>(function(){let d,p;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();d=e;const b=document.getElementById("installApp");if(b){b.style.display="block";b.onclick=async()=>{d.prompt();await d.userChoice;b.style.display="none"}}});if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js");})();</script></body>
+</html>

@@ -1,0 +1,29 @@
+CUP & SLICE — FINAL REAL PROJECT
+
+1. Install Node.js 22.13+
+2. Open Terminal in this folder
+3. Run: npm install
+4. Run: npm start
+5. Website: http://localhost:3000
+6. First time only: http://localhost:3000/setup.html
+7. Create your own Owner/Admin ID + password. No default admin credentials are stored.
+8. Admin login: http://localhost:3000/admin.html
+9. Kitchen: http://localhost:3000/kitchen.html
+10. Delivery GPS console: http://localhost:3000/delivery.html
+11. Health: http://localhost:3000/api/health
+12. Same Wi-Fi phone: ipconfig -> IPv4 Address -> http://YOUR-IP:3000
+
+REAL PAYMENT
+- Cash / Pay at Cafe: works without gateway.
+- UPI / PhonePe / Paytm: restaurant QR + UTR/reference workflow.
+- Razorpay: add merchant test/live keys to .env; never put secret keys in frontend.
+
+LIVE GPS
+- Delivery staff logs in at /delivery.html.
+- Start/Update GPS only for active out_for_delivery orders.
+- Customer dashboard polls backend and shows latest coordinates + ETA.
+- Browser location permission and HTTPS are required in production.
+
+IMPORTANT
+- SQLite database is created automatically at data/cafe.db on first run.
+- Do not commit .env, data/.secret or data/vapid.json.
