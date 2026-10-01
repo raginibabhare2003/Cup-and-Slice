@@ -2,13 +2,13 @@
   "name": "cup-and-slice-fullstack",
   "version": "5.0.0",
   "private": true,
-  "description": "Cup & Slice professional restaurant ordering platform with separate frontend/backend and SQLite",
-  "main": "backend/server.js",
+  "description": "Cup & Slice professional restaurant ordering platform with separate frontend/backend and PostgreSQL",
+  "main": "backend/server-postgres.js",
   "engines": {
     "node": ">=22.13"
   },
   "scripts": {
-    "start": "node backend/server.js",
+    "start": "node backend/server-postgres.js",
     "test": "node --test backend/api.test.js"
   },
   "license": "MIT",
